@@ -1,0 +1,125 @@
+.user-settings {
+  background: var(--bg-primary);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-settings__header {
+  margin-bottom: 24px;
+}
+
+.user-settings__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-settings__tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.user-settings__tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+}
+
+.user-settings__tab:hover {
+  color: var(--text-primary);
+}
+
+.user-settings__tab--active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.user-settings__message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.user-settings__message--success {
+  background: var(--success-light);
+  color: var(--success-dark);
+}
+
+.user-settings__message--error {
+  background: var(--error-light);
+  color: var(--error-dark);
+}
+
+.user-settings__content {
+  max-width: 600px;
+}
+
+.user-settings__section {
+  margin-bottom: 32px;
+}
+
+.user-settings__section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.user-settings__field {
+  margin-bottom: 20px;
+}
+
+.user-settings__label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.user-settings__input,
+.user-settings__select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  transition: all 0.2s ease;
+}
+
+.user-settings__input:focus,
+.user-settings__select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.user-settings__input:disabled {
+  background: var(--bg-disabled);
+  cursor: not-allowed;
+}
+
+.user-settings__toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-settings__toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

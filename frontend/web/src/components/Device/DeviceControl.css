@@ -1,0 +1,491 @@
+.device-control-container {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: relative;
+}
+
+.device-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.device-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.online {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.offline {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-badge.idle {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.error-message {
+  background: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-message button {
+  background: none;
+  border: none;
+  color: #c62828;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.device-control {
+  margin: 20px 0;
+}
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px 0;
+}
+
+.control-row label {
+  font-weight: 500;
+  color: #555;
+  flex: 0 0 120px;
+}
+
+.control-row input[type="range"] {
+  flex: 1;
+  margin: 0 15px;
+}
+
+.control-row .value {
+  flex: 0 0 60px;
+  text-align: right;
+  font-weight: 600;
+  color: #333;
+}
+
+.toggle-btn {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.toggle-btn.on {
+  background: #4caf50;
+  color: white;
+}
+
+.toggle-btn.off {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.toggle-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.toggle-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Light Control */
+.light-control input[type="color"] {
+  width: 60px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Thermostat Control */
+.thermostat-control select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.temperature-display {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+.temperature-display > div {
+  text-align: center;
+}
+
+.temperature-display .label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.temperature-display .value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.temperature-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.temperature-controls button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.temperature-controls button:hover:not(:disabled) {
+  background: #f5f5f5;
+  transform: scale(1.1);
+}
+
+.temperature-controls input {
+  width: 80px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Lock Control */
+.lock-control {
+  text-align: center;
+}
+
+.lock-btn {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.lock-btn.locked {
+  background: #4caf50;
+  color: white;
+}
+
+.lock-btn.unlocked {
+  background: #ff9800;
+  color: white;
+}
+
+.lock-info {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.lock-info p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Camera Control */
+.camera-control {
+  text-align: center;
+}
+
+.camera-preview {
+  width: 100%;
+  height: 300px;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-stream {
+  color: #999;
+  font-size: 1.2rem;
+}
+
+.camera-control button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  background: #2196f3;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.camera-control button:hover:not(:disabled) {
+  background: #1976d2;
+}
+
+/* Sensor Control */
+.sensor-control {
+  text-align: center;
+}
+
+.sensor-readings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.sensor-readings .reading {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.sensor-readings .label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.sensor-readings .value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.sensor-readings .value.detected {
+  color: #f44336;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.refresh-btn {
+  padding: 10px 24px;
+  border: 1px solid #2196f3;
+  background: white;
+  color: #2196f3;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: #2196f3;
+  color: white;
+}
+
+/* Switch Control */
+.switch-control .control-row {
+  padding: 15px 0;
+}
+
+/* Generic Control */
+.generic-control {
+  text-align: center;
+}
+
+.state-display {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.state-display pre {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+  overflow-x: auto;
+}
+
+/* Footer */
+.device-footer {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.last-updated {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  color: #666;
+  z-index: 10;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .device-control-container {
+    padding: 15px;
+  }
+
+  .device-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .control-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .control-row label {
+    margin-bottom: 8px;
+  }
+
+  .control-row input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .temperature-display {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .sensor-readings {
+    grid-template-columns: 1fr;
+  }
+
+  .camera-preview {
+    height: 200px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .device-control-container {
+    background: #1e1e1e;
+    color: #e0e0e0;
+  }
+
+  .device-header {
+    border-bottom-color: #333;
+  }
+
+  .device-header h3 {
+    color: #e0e0e0;
+  }
+
+  .control-row label {
+    color: #b0b0b0;
+  }
+
+  .control-row .value {
+    color: #e0e0e0;
+  }
+
+  .temperature-display,
+  .sensor-readings .reading,
+  .state-display,
+  .lock-info {
+    background: #2a2a2a;
+  }
+
+  .temperature-display .value,
+  .sensor-readings .value {
+    color: #e0e0e0;
+  }
+
+  .toggle-btn.off {
+    background: #3a3a3a;
+    color: #b0b0b0;
+  }
+
+  .thermostat-control select,
+  .temperature-controls input {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+  }
+
+  .device-footer {
+    border-top-color: #333;
+  }
+}

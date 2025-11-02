@@ -1,0 +1,108 @@
+.automation-history {
+  padding: 20px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-buttons button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-buttons button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.executions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.execution-item {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.execution-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.execution-main {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.execution-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.execution-time {
+  color: #666;
+  font-size: 14px;
+}
+
+.execution-details {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.execution-status {
+  font-weight: 600;
+}
+
+.actions-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.action-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.action-item.success {
+  border-left: 3px solid #28a745;
+}
+
+.action-item.failed {
+  border-left: 3px solid #dc3545;
+}
+
+.error-message {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 15px 0;
+  color: #856404;
+}

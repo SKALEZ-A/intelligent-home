@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smarthome-config
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  RATE_LIMIT_WINDOW_MS: "900000"
+  RATE_LIMIT_MAX_REQUESTS: "100"
+  DEFAULT_API_VERSION: "1.0"
+  CACHE_ENABLED: "true"
+  CACHE_TTL: "300"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-urls
+data:
+  AUTH_SERVICE_URL: "http://auth-service:3002"
+  DEVICE_SERVICE_URL: "http://device-service:3003"
+  AUTOMATION_SERVICE_URL: "http://automation-service:3004"
+  ENERGY_SERVICE_URL: "http://energy-service:3005"
+  NOTIFICATION_SERVICE_URL: "http://notification-service:3007"
+  WEATHER_SERVICE_URL: "http://weather-service:3008"
+  INTEGRATION_SERVICE_URL: "http://integration-service:3009"
+  VIDEO_SERVICE_URL: "http://video-streaming-service:3010"
+  VOICE_SERVICE_URL: "http://voice-assistant-service:3011"

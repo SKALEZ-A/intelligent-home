@@ -1,0 +1,162 @@
+.schedule-manager {
+  padding: 20px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.schedule-header h2 {
+  font-size: 28px;
+  color: #333;
+  margin: 0;
+}
+
+.add-schedule-btn {
+  padding: 10px 20px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.schedules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.schedule-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schedule-info h3 {
+  font-size: 18px;
+  color: #333;
+  margin: 0 0 5px 0;
+}
+
+.device-name {
+  font-size: 14px;
+  color: #999;
+  margin: 0 0 10px 0;
+}
+
+.schedule-details {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.schedule-details span {
+  font-size: 14px;
+  color: #666;
+}
+
+.days-badges {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.day-badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  background: #e3f2fd;
+  color: #2196F3;
+  border-radius: 4px;
+}
+
+.schedule-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.days-selector {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.day-btn {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.day-btn.selected {
+  background: #2196F3;
+  color: white;
+  border-color: #2196F3;
+}

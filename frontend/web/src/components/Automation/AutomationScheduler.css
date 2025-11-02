@@ -1,0 +1,108 @@
+.automation-scheduler {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-type-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.schedule-type-selector button {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.schedule-type-selector button:hover {
+  background: #f8f9fa;
+}
+
+.schedule-type-selector button.active {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+.schedule-config {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.time-picker,
+.offset-picker,
+.interval-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.time-picker label,
+.offset-picker label,
+.interval-picker label {
+  font-weight: 500;
+  min-width: 100px;
+}
+
+.time-picker input,
+.offset-picker input,
+.interval-picker input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.offset-hint {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+}
+
+.day-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.day-selector label {
+  font-weight: 500;
+}
+
+.days {
+  display: flex;
+  gap: 8px;
+}
+
+.days button {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.days button:hover {
+  background: #f8f9fa;
+}
+
+.days button.active {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}

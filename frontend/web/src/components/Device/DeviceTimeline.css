@@ -1,0 +1,231 @@
+.device-timeline {
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.device-timeline__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.device-timeline__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.device-timeline__controls {
+  display: flex;
+  gap: 12px;
+}
+
+.device-timeline__filter {
+  padding: 8px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.device-timeline__filter:hover {
+  background: #f5f5f5;
+}
+
+.device-timeline__content {
+  position: relative;
+  padding-left: 40px;
+}
+
+.device-timeline__line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #4CAF50, #2196F3);
+}
+
+.device-timeline__event {
+  position: relative;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid #4CAF50;
+  transition: all 0.3s;
+}
+
+.device-timeline__event:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.device-timeline__event--warning {
+  border-left-color: #FF9800;
+}
+
+.device-timeline__event--error {
+  border-left-color: #f44336;
+}
+
+.device-timeline__event--info {
+  border-left-color: #2196F3;
+}
+
+.device-timeline__event-marker {
+  position: absolute;
+  left: -28px;
+  top: 20px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4CAF50;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.device-timeline__event--warning .device-timeline__event-marker {
+  background: #FF9800;
+}
+
+.device-timeline__event--error .device-timeline__event-marker {
+  background: #f44336;
+}
+
+.device-timeline__event--info .device-timeline__event-marker {
+  background: #2196F3;
+}
+
+.device-timeline__event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.device-timeline__event-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.device-timeline__event-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.device-timeline__event-description {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.device-timeline__event-details {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.device-timeline__event-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #777;
+}
+
+.device-timeline__event-detail-icon {
+  width: 16px;
+  height: 16px;
+  color: #999;
+}
+
+.device-timeline__event-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.device-timeline__event-action {
+  padding: 6px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.device-timeline__event-action:hover {
+  background: #f0f0f0;
+}
+
+.device-timeline__load-more {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 24px;
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+  background: transparent;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.device-timeline__load-more:hover {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.device-timeline__empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: #999;
+}
+
+.device-timeline__empty-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  opacity: 0.3;
+}
+
+.device-timeline__empty-text {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .device-timeline {
+    padding: 16px;
+  }
+
+  .device-timeline__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .device-timeline__content {
+    padding-left: 32px;
+  }
+
+  .device-timeline__event {
+    padding: 12px;
+  }
+
+  .device-timeline__event-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

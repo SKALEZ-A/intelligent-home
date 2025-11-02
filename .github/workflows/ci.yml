@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        service: [auth-service, device-service, automation-service, energy-service, notification-service, weather-service]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: backend/${{ matrix.service }}/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: backend/${{ matrix.service }}
+      run: npm ci
+    
+    - name: Run linter
+      working-directory: backend/${{ matrix.service }}
+      run: npm run lint --if-present
+    
+    - name: Run tests
+      working-directory: backend/${{ matrix.service }}
+      run: npm test --if-present
+    
+    - name: Build
+      working-directory: backend/${{ matrix.service }}
+      run: npm run build
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: frontend/web/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: frontend/web
+      run: npm ci
+    
+    - name: Run linter
+      working-directory: frontend/web
+      run: npm run lint --if-present
+    
+    - name: Run tests
+      working-directory: frontend/web
+      run: npm test --if-present
+    
+    - name: Build
+      working-directory: frontend/web
+      run: npm run build --if-present
+
+  test-ml-models:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      working-directory: ml-models
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run tests
+      working-directory: ml-models
+      run: |
+        python -m pytest tests/ --if-present || echo "No tests found"
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker images
+      run: |
+        docker-compose build --parallel

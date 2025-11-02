@@ -1,0 +1,305 @@
+version: '3.8'
+
+services:
+  # Databases
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: homeauto
+      POSTGRES_PASSWORD: homeauto_dev
+      POSTGRES_DB: homeautomation
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - homeauto-network
+
+  mongodb:
+    image: mongo:7
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: homeauto
+      MONGO_INITDB_ROOT_PASSWORD: homeauto_dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - homeauto-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - homeauto-network
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg15
+    environment:
+      POSTGRES_USER: homeauto
+      POSTGRES_PASSWORD: homeauto_dev
+      POSTGRES_DB: timeseries
+    ports:
+      - "5433:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    networks:
+      - homeauto-network
+
+  # Message Brokers
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./config/mosquitto:/mosquitto/config
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log
+    networks:
+      - homeauto-network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: homeauto
+      RABBITMQ_DEFAULT_PASS: homeauto_dev
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - homeauto-network
+
+  # Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - homeauto-network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./config/grafana:/etc/grafana/provisioning
+    networks:
+      - homeauto-network
+
+  # Services
+  auth-service:
+    build:
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "3100:3100"
+    environment:
+      NODE_ENV: development
+      PORT: 3100
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev_jwt_secret_change_in_production
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - homeauto-network
+
+  device-service:
+    build:
+      context: ./backend/device-service
+      dockerfile: Dockerfile
+    ports:
+      - "3200:3200"
+    environment:
+      NODE_ENV: development
+      PORT: 3200
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      MONGODB_URL: mongodb://homeauto:homeauto_dev@mongodb:27017/devices
+      REDIS_URL: redis://redis:6379
+      TIMESCALE_URL: postgresql://homeauto:homeauto_dev@timescaledb:5432/timeseries
+      MQTT_URL: mqtt://mosquitto:1883
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+      - timescaledb
+      - mosquitto
+    networks:
+      - homeauto-network
+
+  automation-service:
+    build:
+      context: ./backend/automation-service
+      dockerfile: Dockerfile
+    ports:
+      - "3300:3300"
+    environment:
+      NODE_ENV: development
+      PORT: 3300
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://homeauto:homeauto_dev@rabbitmq:5672
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    networks:
+      - homeauto-network
+
+  ml-service:
+    build:
+      context: ./ml-models
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      REDIS_URL: redis://redis:6379
+      TIMESCALE_URL: postgresql://homeauto:homeauto_dev@timescaledb:5432/timeseries
+    depends_on:
+      - postgres
+      - redis
+      - timescaledb
+    networks:
+      - homeauto-network
+
+  energy-service:
+    build:
+      context: ./backend/energy-service
+      dockerfile: Dockerfile
+    ports:
+      - "3400:3400"
+    environment:
+      NODE_ENV: development
+      PORT: 3400
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      TIMESCALE_URL: postgresql://homeauto:homeauto_dev@timescaledb:5432/timeseries
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - postgres
+      - timescaledb
+      - redis
+    networks:
+      - homeauto-network
+
+  security-service:
+    build:
+      context: ./backend/security-service
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      REDIS_URL: redis://redis:6379
+      S3_BUCKET: homeauto-security-dev
+      AWS_REGION: us-east-1
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - homeauto-network
+
+  notification-service:
+    build:
+      context: ./backend/notification-service
+      dockerfile: Dockerfile
+    ports:
+      - "3500:3500"
+    environment:
+      NODE_ENV: development
+      PORT: 3500
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://homeauto:homeauto_dev@rabbitmq:5672
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    networks:
+      - homeauto-network
+
+  analytics-service:
+    build:
+      context: ./backend/analytics-service
+      dockerfile: Dockerfile
+    ports:
+      - "3600:3600"
+    environment:
+      NODE_ENV: development
+      PORT: 3600
+      DATABASE_URL: postgresql://homeauto:homeauto_dev@postgres:5432/homeautomation
+      TIMESCALE_URL: postgresql://homeauto:homeauto_dev@timescaledb:5432/timeseries
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - postgres
+      - timescaledb
+      - redis
+    networks:
+      - homeauto-network
+
+  api-gateway:
+    image: kong:3.4-alpine
+    ports:
+      - "8080:8000"
+      - "8443:8443"
+      - "8001:8001"
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: postgres
+      KONG_PG_USER: homeauto
+      KONG_PG_PASSWORD: homeauto_dev
+      KONG_PG_DATABASE: kong
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+    depends_on:
+      - postgres
+    networks:
+      - homeauto-network
+
+  web-dashboard:
+    build:
+      context: ./frontend/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+      NEXT_PUBLIC_WS_URL: ws://localhost:8080
+    depends_on:
+      - api-gateway
+    networks:
+      - homeauto-network
+
+volumes:
+  postgres_data:
+  mongo_data:
+  redis_data:
+  timescale_data:
+  mosquitto_data:
+  mosquitto_logs:
+  rabbitmq_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  homeauto-network:
+    driver: bridge
